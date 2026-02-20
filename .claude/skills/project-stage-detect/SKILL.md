@@ -25,7 +25,8 @@ Analyze project structure and content:
 
 **Design Documentation** (`design/`):
 - Count GDD files in `design/gdd/*.md`
-- Check for game-concept.md, game-pillars.md
+- Check for game-concept.md, game-pillars.md, systems-index.md
+- If systems-index.md exists, count total systems vs. designed systems
 - Analyze completeness (Overview, Detailed Design, Edge Cases, etc.)
 - Count narrative docs in `design/narrative/`
 - Count level designs in `design/levels/`
@@ -72,6 +73,7 @@ Based on scanned artifacts, determine stage:
 - "I see combat code (`src/gameplay/combat/`) but no `design/gdd/combat-system.md`. Was this prototyped first, or should we reverse-document?"
 - "You have 15 ADRs but no architecture overview. Should I create one to help new contributors?"
 - "No sprint plans in `production/`. Are you tracking work elsewhere (Jira, Trello, etc.)?"
+- "I found a game concept but no systems index. Have you decomposed the concept into individual systems yet, or should we run `/design-systems`?"
 - "Prototypes directory has 3 projects with no READMEs. Were these experiments, or do they need documentation?"
 
 ### 4. Generate Stage Report
@@ -163,6 +165,7 @@ Wait for user approval before creating the file.
 
 After generating the report, suggest relevant next steps:
 
+- **Concept exists but no systems index?** → `/design-systems` to decompose into systems
 - **Missing design docs?** → `/reverse-document design src/[system]`
 - **Missing architecture docs?** → `/architecture-decision` or `/reverse-document architecture`
 - **Prototypes need documentation?** → `/reverse-document concept prototypes/[name]`
