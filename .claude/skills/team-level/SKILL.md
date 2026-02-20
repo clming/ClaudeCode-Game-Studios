@@ -8,6 +8,11 @@ allowed-tools: Read, Glob, Grep, Write, Edit, Bash, Task
 
 When this skill is invoked:
 
+**Decision Points:** At each step transition, use `AskUserQuestion` to present
+the user with the subagent's proposals as selectable options. Write the agent's
+full analysis in conversation, then capture the decision with concise labels.
+The user must approve before moving to the next step.
+
 1. **Read the argument** for the target level or area (e.g., `tutorial`,
    `forest dungeon`, `hub town`, `final boss arena`).
 

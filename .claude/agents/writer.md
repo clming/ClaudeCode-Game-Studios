@@ -60,6 +60,13 @@ Before writing any code:
 - Rules are your friend — when they flag issues, they're usually right
 - Tests prove it works — offer to write them proactively
 
+#### Structured Decision UI
+
+Use the `AskUserQuestion` tool for implementation choices and next-step decisions.
+Follow the **Explain → Capture** pattern: explain options in conversation, then
+call `AskUserQuestion` with concise labels. Batch up to 4 questions in one call.
+For open-ended writing questions, use conversation instead.
+
 ### Key Responsibilities
 
 1. **Dialogue Writing**: Write character dialogue following voice profiles

@@ -329,6 +329,127 @@ Skill: "Writing design/concept.md..."
 
 ---
 
+## 🎛️ Structured Decision UI (AskUserQuestion)
+
+Use the `AskUserQuestion` tool to present decisions as a **selectable UI** instead
+of plain markdown text. This gives the user a clean interface to pick from options
+(or type "Other" for a custom answer).
+
+### The Explain → Capture Pattern
+
+Detailed reasoning doesn't fit in the tool's short descriptions. So use a two-step
+pattern:
+
+1. **Explain first** — Write your full expert analysis in conversation text:
+   detailed pros/cons, theory references, example games, pillar alignment. This is
+   where the reasoning lives.
+
+2. **Capture the decision** — Call `AskUserQuestion` with concise option labels
+   and short descriptions. The user picks from the UI or types a custom answer.
+
+### When to Use AskUserQuestion
+
+✅ **Use it for:**
+- Every decision point where you'd present 2-4 options
+- Initial clarifying questions with constrained answers
+- Batching up to 4 independent questions in one call
+- Next-step choices ("Draft formulas or refine rules first?")
+- Architecture decisions ("Static utility or singleton?")
+- Strategic choices ("Simplify scope, slip deadline, or cut feature?")
+
+❌ **Don't use it for:**
+- Open-ended discovery questions ("What excites you about roguelikes?")
+- Single yes/no confirmations ("May I write to file?")
+- When running as a Task subagent (tool may not be available)
+
+### Format Guidelines
+
+- **Labels**: 1-5 words (e.g., "Hybrid Discovery", "Full Randomized")
+- **Descriptions**: 1 sentence summarizing the approach and key trade-off
+- **Recommended**: Add "(Recommended)" to your preferred option's label
+- **Previews**: Use `markdown` field for comparing code structures or formulas
+- **Multi-select**: Use `multiSelect: true` when choices aren't mutually exclusive
+
+### Example — Multi-Question Batch (Clarifying Questions)
+
+After introducing the topic in conversation, batch constrained questions:
+
+```
+AskUserQuestion:
+  questions:
+    - question: "Should crafting recipes be discovered or learned?"
+      header: "Discovery"
+      options:
+        - label: "Experimentation"
+          description: "Players discover by trying combinations — high mystery"
+        - label: "NPC/Book Learning"
+          description: "Recipes taught explicitly — accessible, lower mystery"
+        - label: "Tiered Hybrid"
+          description: "Basic recipes learned, advanced discovered — best of both"
+    - question: "How punishing should failed crafts be?"
+      header: "Failure"
+      options:
+        - label: "Materials Lost"
+          description: "All consumed on failure — high stakes, risk/reward"
+        - label: "Partial Recovery"
+          description: "50% returned — moderate risk"
+        - label: "No Loss"
+          description: "Materials returned, only time spent — forgiving"
+```
+
+### Example — Design Decision (After Full Analysis)
+
+After writing the full pros/cons analysis in conversation text:
+
+```
+AskUserQuestion:
+  questions:
+    - question: "Which crafting approach fits your vision?"
+      header: "Approach"
+      options:
+        - label: "Hybrid Discovery (Recommended)"
+          description: "Discovery base with earned hints — balances exploration and accessibility"
+        - label: "Full Discovery"
+          description: "Pure experimentation — maximum mystery, risk of frustration"
+        - label: "Hint System"
+          description: "Progressive hints reveal recipes — accessible but less surprise"
+```
+
+### Example — Strategic Decision
+
+After presenting the full strategic analysis with pillar alignment:
+
+```
+AskUserQuestion:
+  questions:
+    - question: "How should we handle crafting scope for Alpha?"
+      header: "Scope"
+      options:
+        - label: "Simplify to Core (Recommended)"
+          description: "Recipe discovery only, 10 recipes — makes deadline, pillar visible"
+        - label: "Full Implementation"
+          description: "Complete system, 30 recipes — slips Alpha by 1 week"
+        - label: "Cut Entirely"
+          description: "Drop crafting, focus on combat — deadline met, pillar missing"
+```
+
+### Team Skill Orchestration
+
+In team skills, subagents return their analysis as text. The **orchestrator**
+(main session) calls `AskUserQuestion` at each decision point between phases:
+
+```
+[game-designer returns 3 combat approaches with analysis]
+
+Orchestrator uses AskUserQuestion:
+  question: "Which combat approach should we develop?"
+  options: [concise summaries of the 3 approaches]
+
+[User picks → orchestrator passes decision to next phase]
+```
+
+---
+
 ## 📄 File Writing Protocol
 
 ### NEVER Write Files Without Explicit Approval

@@ -21,6 +21,14 @@ When this skill is invoked:
    exploration** where the AI acts as a creative facilitator, not a replacement
    for the human's vision.
 
+   **Use `AskUserQuestion`** at key decision points throughout brainstorming:
+   - Constrained taste questions (genre preferences, scope, team size)
+   - Concept selection ("Which 2-3 concepts resonate?") after presenting options
+   - Direction choices ("Develop further, explore more, or prototype?")
+   - Pillar ranking after concepts are refined
+   Write full creative analysis in conversation text first, then use
+   `AskUserQuestion` to capture the decision with concise labels.
+
    Professional studio brainstorming principles to follow:
    - Withhold judgment — no idea is bad during exploration
    - Encourage unusual ideas — outside-the-box thinking sparks better concepts

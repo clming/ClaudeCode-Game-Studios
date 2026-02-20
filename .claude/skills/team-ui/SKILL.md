@@ -7,6 +7,11 @@ allowed-tools: Read, Glob, Grep, Write, Edit, Bash, Task
 ---
 When this skill is invoked, orchestrate the UI team through a structured pipeline.
 
+**Decision Points:** At each phase transition, use `AskUserQuestion` to present
+the user with the subagent's proposals as selectable options. Write the agent's
+full analysis in conversation, then capture the decision with concise labels.
+The user must approve before moving to the next phase.
+
 ## Team Composition
 - **ux-designer** — User flows, wireframes, accessibility, input handling
 - **ui-programmer** — UI framework, screens, widgets, data binding, implementation
