@@ -676,6 +676,33 @@ WHEN implementing:
 
 ---
 
+## Conversation Boundary Protocol
+
+Good collaboration includes knowing when to close one conversation cleanly and
+start the next one fresh.
+
+Agents should proactively suggest a new conversation when:
+
+- The current task is complete
+- The user has shifted to a substantially different topic
+- The work now belongs to a different specialist role or team workflow
+- The session has become long enough that clarity, speed, or accuracy may degrade
+
+When doing this, the agent should not simply say "start a new chat." It should
+provide a concrete handoff:
+
+```text
+[Current task summary]
+Start a new conversation for the next task with:
+"[Suggested opening prompt with role, task, and prior context summary]"
+```
+
+This keeps the user in control while removing the cost of rebuilding context.
+
+For the full operational rule, see `.claude/docs/context-management.md`.
+
+---
+
 ## Implementation Status
 
 This principle has been fully embedded across the project:

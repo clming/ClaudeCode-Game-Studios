@@ -52,3 +52,5 @@ See `docs/COLLABORATIVE-DESIGN-PRINCIPLE.md` for full protocol and examples.
 ## Context Management
 
 @.claude/docs/context-management.md
+
+Follow the session-boundary and handoff rules in `.claude/docs/context-management.md`.

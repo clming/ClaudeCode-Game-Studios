@@ -105,3 +105,53 @@ If a session dies ("prompt too long") or you start a new session to continue wor
 2. Read the full state file for context
 3. Read the partially-completed file(s) listed in the state
 4. Continue from the next incomplete section or task
+
+## Session Boundary Rules
+
+Agents should proactively suggest starting a new conversation when doing so will
+improve clarity, speed, or accuracy.
+
+### When to Suggest a New Conversation
+
+Suggest a fresh conversation when any of the following is true:
+
+1. **Task Completed** -- The primary goal of the current conversation is done.
+   Summarize what was completed, then suggest a new conversation for the next task.
+2. **Topic Drift** -- The user shifts to a substantially different task
+   (for example, moving from bug fixing to sprint planning or from GDD writing
+   to release work).
+3. **Role Switch** -- The task now clearly belongs to a different specialist
+   role or team flow (for example, switching from `gameplay-programmer` work
+   to `producer` planning or `qa-lead` verification).
+4. **Context Overload** -- The conversation has exceeded roughly 30 back-and-forth
+   rounds, or the session is becoming slow, repetitive, or context-fragile.
+
+### How to Handoff
+
+When suggesting a new conversation:
+
+1. Summarize the current task's outcome or current stopping point
+2. State why a fresh conversation would help
+3. Provide a concrete, copy-paste-ready opening prompt
+4. Include the role, next task, and the minimum prior context needed
+
+Use this format:
+
+```text
+[Current task summary]
+Start a new conversation for the next task with:
+"[Suggested opening prompt with role, task, and prior context summary]"
+```
+
+### Handoff Quality Standard
+
+A good handoff prompt should:
+
+- Name the role or workflow to use next
+- State the exact next objective
+- Include only the critical prior context
+- Be immediately usable without reconstruction work from the user
+
+If a task is still actively in progress and the current conversation remains
+focused, do not force a new conversation. This is a proactive suggestion rule,
+not a hard stop rule.
