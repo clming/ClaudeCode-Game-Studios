@@ -620,7 +620,167 @@
 
 ---
 
-## 11. 你应该怎样正确使用这些 Agent
+## 11. 新会话交接规则在调度链中的位置
+
+这条新规则不只是“聊天建议”，它在整个调度体系里其实承担的是：
+
+> 主会话的收口、切换和交接协议。
+
+也就是说，它主要作用于这条链路：
+
+`用户 -> 主会话/技能 -> 子 Agent -> 主会话汇总 -> 用户决策 -> 新会话交接`
+
+### 11.1 为什么主要由主会话执行
+
+虽然很多分析来自子 Agent，但真正应该判断“是否该开启新会话”的，通常仍然是主会话。
+
+原因有三个：
+
+1. 主会话掌握完整阶段状态
+   - 知道当前任务是否完成
+   - 知道是否发生话题漂移
+   - 知道是否已经切换了工作流
+2. 子 Agent 通常只看到自己局部任务
+   - 它知道自己这段分析是否结束
+   - 但未必知道整个会话是否该切换
+3. 交接提示需要面向“下一步总任务”
+   - 这通常不是子 Agent 能单独定义的
+   - 而是由主会话结合当前阶段和下一阶段来生成
+
+所以最准确的理解是：
+
+> 子 Agent 负责完成本段专业工作，主会话负责判断何时收口并给出下一轮对话入口。
+
+### 11.2 它在 team-* 技能中的位置
+
+在 `team-combat`、`team-ui`、`team-release` 这类多 Agent 编排技能里，这条规则最适合出现在两个位置：
+
+#### 位置 A：整个流水线完成后
+
+例如：
+
+- 战斗功能设计、实现、验证都完成了
+- 主会话已经能给出 COMPLETE / NEEDS WORK / BLOCKED 总结
+
+这时主会话应判断：
+
+- 当前任务已经闭环
+- 下一个任务是否属于不同阶段
+
+如果是，就应该建议新会话继续，例如：
+
+- 从功能实现转入 Sprint 规划
+- 从 UI 功能转入 QA 验证
+- 从发版准备转入上线监控
+
+#### 位置 B：中途发生明显工作流切换时
+
+例如：
+
+- 当前在 `/team-combat` 中做战斗功能
+- 用户突然想切去讨论商业化路线
+- 或从实现细节跳到版本排期
+
+这类变化已经不是当前 team skill 的自然下一步，就适合主会话主动建议：
+
+- 当前会话先收尾
+- 给一个新的开场 prompt
+- 在新对话里切换到 `producer`、`creative-director` 或其他更合适的角色
+
+### 11.3 它在 design-system 这类文档流中的位置
+
+对 `/design-system` 这种按章节推进的技能，这条规则也很有用，但触发点更明确：
+
+#### 适合继续当前会话
+
+- 还在同一份 GDD 内
+- 只是从一个章节进入下一个章节
+- 或还在修同一轮 review 问题
+
+#### 适合建议新会话
+
+- 当前系统 GDD 已完成并已 review
+- 下一步要切到另一个系统
+- 或要从设计切换到原型实现
+- 或要从设计切换到 Sprint 计划
+
+例如：
+
+- 当前完成 `board-system`
+- 下一步要做 `match-resolution-system`
+
+如果上下文仍然清晰，可以继续；
+但如果会话已经很长，主会话就应该主动收口，给出一个新开场 prompt，让下一轮只聚焦新系统。
+
+### 11.4 子 Agent 在这个规则里的职责
+
+子 Agent 虽然通常不是最终交接者，但它仍然有两类职责：
+
+#### 职责 A：明确说明“本段任务已完成”
+
+例如：
+
+- `game-designer` 返回：设计阶段完成
+- `gameplay-programmer` 返回：架构建议完成
+- `qa-tester` 返回：验证结果完成
+
+这会给主会话一个清晰信号：可以考虑收口或切阶段。
+
+#### 职责 B：提示需要角色切换
+
+例如某个子 Agent 可以明确说：
+
+- 这个问题已经超出我的领域
+- 下一步更适合交给 `producer`
+- 下一步更适合用 `/team-release`
+
+然后由主会话把它转换成真正的新会话交接提示。
+
+也就是说：
+
+> 子 Agent 可以发出“该切换”的信号，但真正输出 handoff prompt 的应是主会话。
+
+### 11.5 新会话交接的标准形式
+
+当主会话判断应结束当前对话并进入下一个任务时，应输出：
+
+```text
+[Current task summary]
+Start a new conversation for the next task with:
+"[Suggested opening prompt with role, task, and prior context summary]"
+```
+
+在调度上，这段文本有三个作用：
+
+1. 对当前会话做闭环总结
+2. 把下一步任务明确绑定到合适角色或工作流
+3. 把最小必要上下文传给下一轮，而不是把整段旧对话拖过去
+
+### 11.6 一个调度视角下的例子
+
+假设当前会话一直在做三消项目的系统设计：
+
+- 已完成 `board-system`
+- 已完成 `match-resolution-system`
+- 用户现在想开始 Sprint 规划
+
+这时主会话不应该继续在同一条超长对话里直接切到排期，而应输出类似：
+
+```text
+The board-system and match-resolution-system GDDs are complete for the match-3 project. The next step is production planning for the prototype milestone.
+Start a new conversation for the next task with:
+"Act as producer. Help me create Sprint 1 for my Godot 4.6 match-3 project. We already completed the game concept, systems index, board-system GDD, and match-resolution-system GDD. Focus on MVP prototype scope, task breakdown, risks, and a 1-week sprint."
+```
+
+这就是它在调度链中的准确位置：
+
+- 不是替代子 Agent
+- 不是替代技能编排
+- 而是在一个阶段完成后，由主会话把“当前工作”安全交接到“下一轮工作”
+
+---
+
+## 12. 你应该怎样正确使用这些 Agent
 
 ## 11.1 把 Agent 当角色，不当命令别名
 
@@ -662,7 +822,7 @@
 
 ---
 
-## 12. 最后给你的简化记忆法
+## 13. 最后给你的简化记忆法
 
 如果你只记住一套最小模型，可以记这 4 句：
 
@@ -679,7 +839,7 @@
 
 ---
 
-## 13. 配套阅读
+## 14. 配套阅读
 
 建议和这份文档搭配阅读：
 
