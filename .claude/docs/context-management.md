@@ -20,6 +20,8 @@ after each significant milestone:
 The state file should contain: current task, progress checklist, key decisions
 made, files being worked on, and open questions.
 
+Follow the detailed state-file rules in `.claude/docs/session-state-rules.md`.
+
 ### Status Line Block (Production+ only)
 
 When the project is in Production, Polish, or Release stage, include a structured
