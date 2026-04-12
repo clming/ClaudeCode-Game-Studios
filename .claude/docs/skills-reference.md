@@ -1,6 +1,6 @@
 # Available Skills (Slash Commands)
 
-68 slash commands organized by phase. Type `/` in Claude Code to access any of them.
+72 slash commands organized by phase. Type `/` in Claude Code to access any of them.
 
 ## Onboarding & Navigation
 
@@ -22,6 +22,14 @@
 | `/quick-design` | Lightweight design spec for small changes — tuning, tweaks, minor additions |
 | `/review-all-gdds` | Cross-GDD consistency and game design holism review across all design docs |
 | `/propagate-design-change` | When a GDD is revised, find affected ADRs and produce an impact report |
+
+## Art & Assets
+
+| Command | Purpose |
+|---------|---------|
+| `/art-bible` | Create or extend the project's visual direction bible, motifs, and reference language |
+| `/asset-spec` | Define production-ready specifications for a specific asset, set, or content batch |
+| `/asset-audit` | Audit assets for naming conventions, file size budgets, and pipeline compliance |
 
 ## UX & Interface Design
 
@@ -59,13 +67,13 @@
 | `/design-review` | Review a game design document for completeness and consistency |
 | `/code-review` | Architectural code review for a file or changeset |
 | `/balance-check` | Analyze game balance data, formulas, and config — flag outliers |
-| `/asset-audit` | Audit assets for naming conventions, file size budgets, and pipeline compliance |
 | `/content-audit` | Audit GDD-specified content counts against implemented content |
 | `/scope-check` | Analyze feature or sprint scope against original plan, flag scope creep |
 | `/perf-profile` | Structured performance profiling with bottleneck identification |
 | `/tech-debt` | Scan, track, prioritize, and report on technical debt |
 | `/gate-check` | Validate readiness to advance between development phases (PASS/CONCERNS/FAIL) |
 | `/consistency-check` | Scan all GDDs against the entity registry to detect cross-document inconsistencies (stats, names, rules that contradict each other) |
+| `/security-audit` | Review implementation and pipeline risks for exploitability, auth, secrets, and trust boundaries |
 
 ## QA & Testing
 
@@ -79,7 +87,6 @@
 | `/test-helpers` | Generate engine-specific test helper libraries for the test suite |
 | `/test-evidence-review` | Quality review of test files and manual evidence documents |
 | `/test-flakiness` | Detect non-deterministic (flaky) tests from CI run logs |
-| `/skill-test` | Validate skill files for structural compliance and behavioral correctness |
 
 ## Production
 
@@ -100,6 +107,7 @@
 | `/launch-checklist` | Complete launch readiness validation across all departments |
 | `/changelog` | Auto-generate changelog from git commits and sprint data |
 | `/patch-notes` | Generate player-facing patch notes from git history and internal data |
+| `/day-one-patch` | Plan and package the expected immediate post-launch patch workflow |
 | `/hotfix` | Emergency fix workflow with audit trail, bypassing normal sprint process |
 
 ## Creative & Content
@@ -109,6 +117,13 @@
 | `/prototype` | Rapid throwaway prototype to validate a mechanic (relaxed standards, isolated worktree) |
 | `/onboard` | Generate contextual onboarding document for a new contributor or agent |
 | `/localize` | Localization workflow: string extraction, validation, translation readiness |
+
+## Skill Maintenance
+
+| Command | Purpose |
+|---------|---------|
+| `/skill-test` | Validate skill files for structural compliance and behavioral correctness |
+| `/skill-improve` | Improve an existing skill's prompt, workflow, or support files without changing its intent |
 
 ## Team Orchestration
 

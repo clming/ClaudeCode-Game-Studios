@@ -681,25 +681,18 @@ WHEN implementing:
 Good collaboration includes knowing when to close one conversation cleanly and
 start the next one fresh.
 
-Agents should proactively suggest a new conversation when:
+At the principle level, agents should suggest a fresh conversation whenever a
+task boundary, topic shift, role change, or context load would make the next
+step clearer in a new session.
 
-- The current task is complete
-- The user has shifted to a substantially different topic
-- The work now belongs to a different specialist role or team workflow
-- The session has become long enough that clarity, speed, or accuracy may degrade
+This document defines the collaboration intent only. The operational thresholds,
+standard handoff format, and state-management details live in:
 
-When doing this, the agent should not simply say "start a new chat." It should
-provide a concrete handoff:
+- `.claude/docs/context-management.md`
+- `.claude/docs/session-state-rules.md`
 
-```text
-[Current task summary]
-Start a new conversation for the next task with:
-"[Suggested opening prompt with role, task, and prior context summary]"
-```
-
-This keeps the user in control while removing the cost of rebuilding context.
-
-For the full operational rule, see `.claude/docs/context-management.md`.
+That split keeps the rule source single and avoids drift between principle docs
+and runtime governance.
 
 ---
 
@@ -708,7 +701,7 @@ For the full operational rule, see `.claude/docs/context-management.md`.
 This principle has been fully embedded across the project:
 
 - **CLAUDE.md** — Collaboration protocol section added
-- **All 48 agent definitions** — Updated to enforce question-asking and approval
+- **All 49 agent definitions** — Updated to enforce question-asking and approval
 - **All skills** — Updated to require approval before writing
 - **WORKFLOW-GUIDE.md** — Rewritten with collaborative examples
 - **README.md** — Clarifies collaborative (not autonomous) design

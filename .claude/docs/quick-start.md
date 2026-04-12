@@ -3,7 +3,7 @@
 ## What Is This?
 
 This is a complete Claude Code agent architecture for game development. It
-organizes 48 specialized AI agents into a studio hierarchy that mirrors
+organizes 49 specialized AI agents into a studio hierarchy that mirrors
 real game development teams, with defined responsibilities, delegation
 rules, and coordination protocols. It includes engine-specialist agents
 for Godot, Unity, and Unreal — each with dedicated sub-specialists for
@@ -65,6 +65,7 @@ Ask yourself: "What department would handle this in a real studio?"
 | Manage Addressable assets | `unity-addressables-specialist` |
 | Build UI Toolkit/UGUI screens | `unity-ui-specialist` |
 | Write idiomatic GDScript | `godot-gdscript-specialist` |
+| Build Godot C#/.NET systems | `godot-csharp-specialist` |
 | Create Godot shaders | `godot-shader-specialist` |
 | Build GDExtension modules | `godot-gdextension-specialist` |
 | Plan live events and seasons | `live-ops-designer` |
@@ -86,6 +87,8 @@ Ask yourself: "What department would handle this in a real studio?"
 | `/quick-design` | Lightweight spec for small changes — tuning, tweaks, minor additions |
 | `/review-all-gdds` | Cross-GDD consistency and game design theory review |
 | `/propagate-design-change` | Find ADRs and stories affected by a GDD change |
+| `/art-bible` | Create or update the project's visual direction bible |
+| `/asset-spec` | Define a production-ready spec for a specific asset or asset batch |
 | `/ux-design` | Author UX specs (screen/flow, HUD, interaction patterns) |
 | `/ux-review` | Validate UX specs for accessibility and GDD alignment |
 | `/create-architecture` | Master architecture document for the game |
@@ -110,10 +113,12 @@ Ask yourself: "What department would handle this in a real studio?"
 | `/tech-debt` | Scan, track, and prioritize tech debt |
 | `/gate-check` | Validate phase readiness (PASS/CONCERNS/FAIL) |
 | `/consistency-check` | Scan all GDDs for cross-document inconsistencies (conflicting stats, names, rules) |
+| `/security-audit` | Review security risks across code, config, trust boundaries, and release pipeline |
 | `/reverse-document` | Generate design/architecture docs from existing code |
 | `/milestone-review` | Reviews milestone progress |
 | `/retrospective` | Runs sprint/milestone retrospective |
 | `/bug-report` | Structured bug report creation |
+| `/day-one-patch` | Plan the first post-launch patch, triage, packaging, and rollback readiness |
 | `/playtest-report` | Creates or analyzes playtest feedback |
 | `/onboard` | Generates onboarding docs for a role |
 | `/release-checklist` | Validates pre-release checklist |
@@ -142,6 +147,7 @@ Ask yourself: "What department would handle this in a real studio?"
 | `/test-flakiness` | Detect flaky tests from CI history, flag for quarantine or fix |
 | `/test-evidence-review` | Quality review of test files and manual evidence — ADEQUATE/INCOMPLETE/MISSING |
 | `/skill-test` | Validate skill files for compliance and correctness (static / spec / audit) |
+| `/skill-improve` | Improve an existing skill's prompt, workflow, or support guidance |
 
 ### 4. Use Templates for New Documents
 
@@ -266,8 +272,8 @@ If you have design docs, prototypes, or code already:
 CLAUDE.md                          -- Master config (read this first, ~60 lines)
 .claude/
   settings.json                    -- Claude Code hooks and project settings
-  agents/                          -- 48 agent definitions (YAML frontmatter)
-  skills/                          -- 68 slash command definitions (YAML frontmatter)
+  agents/                          -- 49 agent definitions (YAML frontmatter)
+  skills/                          -- 72 slash command definitions (YAML frontmatter)
   hooks/                           -- 12 hook scripts (.sh) wired by settings.json
   rules/                           -- 11 path-specific rule files
   docs/
@@ -280,5 +286,5 @@ CLAUDE.md                          -- Master config (read this first, ~60 lines)
     workflow-catalog.yaml          -- 7-phase pipeline definition (read by /help)
     setup-requirements.md          -- System prerequisites (Git Bash, jq, Python)
     settings-local-template.md     -- Personal settings.local.json guide
-    templates/                     -- 37 document templates
+    templates/                     -- 35 document templates
 ```

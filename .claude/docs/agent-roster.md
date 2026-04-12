@@ -84,5 +84,6 @@ domain lead) should delegate to specialists.
 | Agent | Subsystem | Model | When to Use |
 | ---- | ---- | ---- | ---- |
 | `godot-gdscript-specialist` | GDScript | Sonnet | Static typing, design patterns, signals, coroutines, GDScript performance |
+| `godot-csharp-specialist` | C# / .NET | Sonnet | Godot C# architecture, assemblies, signals interop, performance, tooling integration |
 | `godot-shader-specialist` | Shaders/Rendering | Sonnet | Godot shading language, visual shaders, particles, post-processing |
 | `godot-gdextension-specialist` | GDExtension | Sonnet | C++/Rust bindings, native performance, custom nodes, build systems |
