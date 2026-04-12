@@ -685,8 +685,8 @@ At the principle level, agents should suggest a fresh conversation whenever a
 task boundary, topic shift, role change, or context load would make the next
 step clearer in a new session.
 
-This document defines the collaboration intent only. The operational thresholds,
-standard handoff format, and state-management details live in:
+This document defines the collaboration principles for the studio.
+The operational thresholds, standard handoff format, and state-management details are defined in:
 
 - `.claude/docs/context-management.md`
 - `.claude/docs/session-state-rules.md`
