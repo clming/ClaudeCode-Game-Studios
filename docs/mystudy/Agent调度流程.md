@@ -843,6 +843,6 @@ Start a new conversation for the next task with:
 
 建议和这份文档搭配阅读：
 
-- `docs/项目使用说明.md`
-- `docs/快速上手清单.md`
+- `docs/mystudy/项目使用说明.md`
+- `docs/mystudy/快速上手清单.md`
 - `docs/examples/README.md`
